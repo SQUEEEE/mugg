@@ -10,7 +10,7 @@ class Node:
 		self.next = None
 
 
-class Stack:
+class Deck:
 	def __init__(self):
 		self.top = None
 		
@@ -33,23 +33,30 @@ class Stack:
 			return False
 
 	def peek(self):
-		return(self.top.value)
+		if self.isEmpty():
+			return None
+		else:
+			return(self.top.value)
 
 
 class Player:
 	def __init__(self):
-		self.openDeck = []
-		self.closedDeck = []
+		self.openDeck = Deck()
+		self.closedDeck = Deck()
 		self.accuracy = 1
 
 	def __str__(self):
-		return "hej"
-		#s = "Open Deck: " + self.openDeck + "\n" + "Closed Deck: " + self.closedDeck + "\n" + "Accuracy: " + self.accuracy + "\n"
-		#return s
+		s = "Open Deck: " + str(self.openDeck.peek()) + "\n" + "Closed Deck: " + str(self.closedDeck.peek()) + "\n" + "Accuracy: " + str(self.accuracy) + "\n"
+		return s
+
+
+#for checking status of player cards
+def printPlayerList():
+	for player in playerList:
+		print(player)
 
 
 def initGame():
-
 
 	#make deck
 
@@ -69,11 +76,19 @@ def initGame():
 
 
 	for i in range(0,PLAYERS):
-		playerList.append(Player)
+		playerList.append(Player())
 
 
-	for player in playerList:
-		print(player)
+	printPlayerList()
+
+	#hand out cards to players
+	while deck:
+		for player in playerList:
+			if deck:
+				player.closedDeck.push(deck.pop())
+
+
+	printPlayerList()
 
 
 initGame()
