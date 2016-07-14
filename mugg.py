@@ -4,6 +4,7 @@ PLAYERS = 4
 DECKS = 6
 playerList = []
 finishedDecks = [0]*DECKS
+deck = []
 
 
 class Node:
@@ -83,11 +84,10 @@ def printDivide():
 
 
 
-def initGame():
 
-	#make deck
 
-	deck = []
+def makeDeck():
+
 	partDeck = list(range(1,16))
 	counter = 0
 
@@ -98,6 +98,7 @@ def initGame():
 	random.shuffle(deck)
 
 
+def initPlayers():
 
 	for i in range(0,PLAYERS):
 		playerList.append(Player(i))
@@ -109,6 +110,7 @@ def initGame():
 		player.nextPlayers = playerList[pIndex+1:]+playerList[:pIndex]
 
 
+def handOutCards():
 
 	#hand out cards to players
 	while deck:
@@ -150,6 +152,16 @@ def initGame():
 
 
 
+def initGame():
+	makeDeck()
+	initPlayers()
+	handOutCards()
+
+
+def gameLoop():
+
+	#the turns in the game take place here
+	pass
 
 initGame()
 
