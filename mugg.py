@@ -24,9 +24,12 @@ class Deck:
 		self.top = node
 
 	def pop(self):
-		x = self.top.value
-		self.top = self.top.next
-		return x
+		if self.isEmpty():
+			return None
+		else:
+			x = self.top.value
+			self.top = self.top.next
+			return x
 
 	def isEmpty(self):
 		if not self.top:
@@ -62,6 +65,11 @@ def checkFinishedDecks(value):
 
 	return False
 
+def checkFinishedGame():
+	if min(finishedDecks) == 15:
+		return True
+	else:
+		return False
 
 
 def printPlayerList(pList=playerList):
@@ -69,6 +77,10 @@ def printPlayerList(pList=playerList):
 	for player in pList:
 		print("Player #", player.playerId)
 		print(player)
+
+def printDivide():
+	print("----------------------------")
+
 
 
 def initGame():
@@ -85,9 +97,6 @@ def initGame():
 
 	random.shuffle(deck)
 
-	print(len(deck))
-	print(deck)
-
 
 
 	for i in range(0,PLAYERS):
@@ -99,12 +108,7 @@ def initGame():
 		pIndex = playerList.index(player)
 		player.nextPlayers = playerList[pIndex+1:]+playerList[:pIndex]
 
-		printPlayerList(player.nextPlayers)
-		print("-------------------\n")
 
-
-
-	printPlayerList()
 
 	#hand out cards to players
 	while deck:
@@ -113,20 +117,40 @@ def initGame():
 				player.closedDeck.push(deck.pop())
 
 
+	#all players put up their first card
+
+	firstCards = []
+	for player in playerList:
+		firstCard = player.closedDeck.pop()
+
+		player.openDeck.push(firstCard)
+		firstCards.append(firstCard)
+
+
+	#check which player begins
+
+	firstPlayer = firstCards.index(min(firstCards))
+
+	print("First player is", firstPlayer)
+	printDivide()
+	
 	printPlayerList()
 
+	printDivide()
+	
+	#reorder so that the first player is first in the list
+	players = playerList[firstPlayer:] + playerList[:firstPlayer]
 
-	print("First instance of 0 in finishedDecks:", checkFinishedDecks(0))
-
-	print("First instance of 5 in finishedDecks:", checkFinishedDecks(5))
-
-	print("Changing finishedDecks[3] to 5")
-
-	finishedDecks[3] = 5
+	print("After reordering of players:")
+	printDivide()
 
 
-	print("First instance of 5 in finishedDecks:", checkFinishedDecks(5))
+	printPlayerList(players)
+
+
+
 
 
 initGame()
+
 
