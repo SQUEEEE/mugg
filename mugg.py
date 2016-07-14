@@ -1,7 +1,9 @@
 import random
 
 PLAYERS = 4
+DECKS = 6
 playerList = []
+finishedDecks = [0]*DECKS
 
 
 class Node:
@@ -49,9 +51,19 @@ class Player:
 		s = "Open Deck: " + str(self.openDeck.peek()) + "\n" + "Closed Deck: " + str(self.closedDeck.peek()) + "\n" + "Accuracy: " + str(self.accuracy) + "\n"
 		return s
 
+def checkFinishedDecks(value):
+#checks the finished decks for a value and returns the place of the deck in the list
 
-#for checking status of player cards
+	for deck in finishedDecks:
+		if deck == value:
+			return finishedDecks.index(value)
+
+	return False
+
+
+
 def printPlayerList():
+#for checking status of player cards
 	for player in playerList:
 		print(player)
 
@@ -90,6 +102,17 @@ def initGame():
 
 	printPlayerList()
 
+
+	print("First instance of 0 in finishedDecks:", checkFinishedDecks(0))
+
+	print("First instance of 5 in finishedDecks:", checkFinishedDecks(5))
+
+	print("Changing finishedDecks[3] to 5")
+
+	finishedDecks[3] = 5
+
+
+	print("First instance of 5 in finishedDecks:", checkFinishedDecks(5))
 
 initGame()
 
