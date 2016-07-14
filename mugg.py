@@ -58,7 +58,26 @@ class Player:
 		return s
 
 	def turn(self):
+
+		success = False
 		print("My turn!", self.playerId)
+
+		#loop: check if openDeck-card can be put somewhere, then if closedDeck can be put somewehere. if neither, turn is over 
+		#somewhere is: firsthand the finishedDecks, then other players
+
+
+		nextOpen = self.openDeck.peek()
+
+		#check if the finishedDecks have the number before the nextOpen
+		finDeck = checkFinishedDecks(nextOpen-1)
+
+		#if this exists,then replace that position with the nextOpen
+		if finDeck:
+			finishedDeck[finDeck] = self.openDeck.pop()
+
+
+
+
 
 def checkFinishedDecks(value):
 #checks the finished decks for a value and returns the place of the deck in the list
@@ -156,7 +175,10 @@ def gameLoop():
 	#the turns in the game take place here
 	while not checkFinishedGame():
 		for player in playerList:
-				player.turn()
+			player.turn()
+			printPlayerList()
+			printDivide()
+
 
 		for i in range(len(finishedDecks)):
 			finishedDecks[i]=15
