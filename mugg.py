@@ -57,6 +57,9 @@ class Player:
 		s = "Open Deck: " + str(self.openDeck.peek()) + "\n" + "Closed Deck: " + str(self.closedDeck.peek()) + "\n" + "Accuracy: " + str(self.accuracy) + "\n"
 		return s
 
+	def turn(self):
+		print("My turn!", self.playerId)
+
 def checkFinishedDecks(value):
 #checks the finished decks for a value and returns the place of the deck in the list
 
@@ -134,20 +137,10 @@ def handOutCards():
 	firstPlayer = firstCards.index(min(firstCards))
 
 	print("First player is", firstPlayer)
-	printDivide()
-	
-	printPlayerList()
 
-	printDivide()
 	
 	#reorder so that the first player is first in the list
 	players = playerList[firstPlayer:] + playerList[:firstPlayer]
-
-	print("After reordering of players:")
-	printDivide()
-
-
-	printPlayerList(players)
 
 
 
@@ -161,8 +154,16 @@ def initGame():
 def gameLoop():
 
 	#the turns in the game take place here
-	pass
+	while not checkFinishedGame():
+		for player in playerList:
+				player.turn()
+
+		for i in range(len(finishedDecks)):
+			finishedDecks[i]=15
+
+
+
 
 initGame()
-
+gameLoop()
 
