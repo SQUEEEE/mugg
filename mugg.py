@@ -42,10 +42,12 @@ class Deck:
 
 
 class Player:
-	def __init__(self):
+	def __init__(self, id):
+		self.playerId = id
 		self.openDeck = Deck()
 		self.closedDeck = Deck()
 		self.accuracy = 1
+		self.nextPlayers = []
 
 	def __str__(self):
 		s = "Open Deck: " + str(self.openDeck.peek()) + "\n" + "Closed Deck: " + str(self.closedDeck.peek()) + "\n" + "Accuracy: " + str(self.accuracy) + "\n"
@@ -62,9 +64,10 @@ def checkFinishedDecks(value):
 
 
 
-def printPlayerList():
+def printPlayerList(pList=playerList):
 #for checking status of player cards
-	for player in playerList:
+	for player in pList:
+		print("Player #", player.playerId)
 		print(player)
 
 
@@ -88,7 +91,17 @@ def initGame():
 
 
 	for i in range(0,PLAYERS):
-		playerList.append(Player())
+		playerList.append(Player(i))
+
+
+	#make the nextPlayers-list
+	for player in playerList:
+		pIndex = playerList.index(player)
+		player.nextPlayers = playerList[pIndex+1:]+playerList[:pIndex]
+
+		printPlayerList(player.nextPlayers)
+		print("-------------------\n")
+
 
 
 	printPlayerList()
@@ -114,24 +127,6 @@ def initGame():
 
 	print("First instance of 5 in finishedDecks:", checkFinishedDecks(5))
 
+
 initGame()
 
-'''
-
-
-myStack = Stack()
-print("Stack is empty:", myStack.isEmpty())
-
-myStack.push(5)
-print("Stack is empty:", myStack.isEmpty())
-
-val = myStack.pop()
-
-print("Popped value is", val)
-
-myStack.push(3)
-myStack.push(4)
-
-print("Top value is", myStack.peek())
-
-'''
